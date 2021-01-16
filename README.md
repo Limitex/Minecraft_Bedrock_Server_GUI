@@ -10,6 +10,7 @@ Platform : Windows
 # How to use
   Insert the built executable file into the same directory as the server software.
   > サーバーソフトウェアのディレクトリにこのソフトウェアをそのまま挿入してください。
+  
 # Funktion
   2021/1/17 : I added automatic server update function.
 
