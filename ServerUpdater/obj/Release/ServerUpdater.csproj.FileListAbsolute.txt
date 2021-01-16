@@ -1,0 +1,10 @@
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\Build\Release\ServerUpdater.exe.config
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\Build\Release\ServerUpdater.exe
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\Build\Release\ServerUpdater.pdb
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.csprojAssemblyReference.cache
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.Form1.resources
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.Properties.Resources.resources
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.csproj.GenerateResource.cache
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.exe
+D:\Documents\GitHub\Minecraft_Bedrock_Server_GUI\ServerUpdater\obj\Release\ServerUpdater.pdb
