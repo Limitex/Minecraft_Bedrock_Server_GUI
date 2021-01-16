@@ -28,6 +28,3 @@ In the center, the transition of the player and the memory usage status are disp
 サーバー情報は右上に表示されます。
 右下では、把握しづらかったプレイヤーの入室状況を簡単に確認できます。
 中央には、5分前までのプレーヤーの遷移とメモリー使用状況を表示しています。
-
-***
-###### The account Exproad that is committed to this repository is my old account.
