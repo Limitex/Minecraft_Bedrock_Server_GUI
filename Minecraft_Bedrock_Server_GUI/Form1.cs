@@ -302,7 +302,7 @@ namespace Minecraft_Bedrock_Server_GUI
                     UpdaterProcess = new Process();
                     UpdaterProcess.StartInfo.FileName = UpdaterFileName;
                     UpdaterProcess.StartInfo.Verb = "runas";
-                    //UpdaterProcess.StartInfo.Arguments = "2010/10/10 00:00:00";
+                    UpdaterProcess.StartInfo.Arguments = DateTime.Now.ToString("yyyy/mm/dd HH:mm:ss");
                     UpdaterProcess.StartInfo.ErrorDialog = true;
                     UpdaterProcess.StartInfo.ErrorDialogParentHandle = this.Handle;
                     UpdaterProcess.EnableRaisingEvents = true;
