@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,12 +19,11 @@ namespace Minecraft_Bedrock_Server_GUI
     public partial class Form1 : Form
     {
         Process ServerProcess;
-        Process UpdaterProcess;
         StreamWriter ServerStreamWriter;
         Thread StartUpThread;
         Thread ChartWriteThread;
-        Thread UpdaterThread;
         delegate void Delegate_string(string vs);
+        delegate void Delegate_int(int i);
         delegate void Delegate_bool(bool d);
         delegate void Delegate_GraphData(float Bytes, int Player);
         delegate void Delegate_NoArguments();
@@ -43,20 +43,34 @@ namespace Minecraft_Bedrock_Server_GUI
         List<float> MemoryBuffer;
         List<int> PlayerBuffer;
 
+        public static Uri ServerDownloadLink;
+
         public static bool infomationWriteFlag = true;
         public static bool chartThreadFlag = true;
-        public static bool StartupFlag = false;
+        public static bool RunningFlag = false;
         public static bool UpdateFlag = false;
+        public static bool InstallingFlag = false;
 
         readonly public static string ServerAppricationName = "bedrock_server";
-        readonly public static string UpdaterAppricationName = "ServerUpdater";
-        readonly public static string ServerFileName = Path.Combine(Application.StartupPath, ServerAppricationName + ".exe");
-        readonly public static string UpdaterFileName = Path.Combine(Application.StartupPath, UpdaterAppricationName + ".exe");
+        readonly public static string ServerAppricationPath = Path.Combine(Application.StartupPath, ServerAppricationName + ".exe");
+        readonly public static string DownloadFolderPath = Path.Combine(Application.StartupPath, "buffer_" + new Random().Next(100000000, 1000000000));
+        readonly public static string DownloadZipPath = Path.Combine(DownloadFolderPath, "bedrock_server.zip");
         readonly public static string FindGlovalIP_Link = "http://httpbin.org/ip";
+        readonly public static string ServerDownloadSite_Link = "https://www.minecraft.net/en-us/download/server/bedrock";
+        readonly public static string ServerDownloadSearch_Link = "https://minecraft.azureedge.net/bin-win/";
+        readonly public static string WorldDirectoryName = Path.Combine(Application.StartupPath, "worlds");
         readonly public static string PlayerAriaName = "Player";
         readonly public static string MemoryAriaName = "MemoryOccupancy";
         readonly public static string[] ShowInfomation = 
             { "Version", "Session ID", "Level Name", "Game mode", "Difficulty", "IPv4 supported", "IPv6 supported" };
+        readonly static string[] NewFileDaletes =
+        {
+            Path.Combine(DownloadFolderPath, @"permissions.json"),
+            Path.Combine(DownloadFolderPath, @"server.properties"),
+            Path.Combine(DownloadFolderPath, @"whitelist.json"),
+            Path.Combine(DownloadFolderPath, @"bedrock_server_how_to.html"),
+            Path.Combine(DownloadFolderPath, @"release-notes.txt")
+        };
 
         public Form1()
         {
@@ -74,38 +88,16 @@ namespace Minecraft_Bedrock_Server_GUI
             }
             else
             {
-                if (File.Exists(ServerFileName))
+                Action<Axis> setAxis = (axisInfo) =>
                 {
-                    StartUpThread = new Thread(new ThreadStart(() =>
-                    {
-                        try
-                        {
-                            WebClient GetGlovalIPWC = new WebClient();
-                            string text1 = GetGlovalIPWC.DownloadString(FindGlovalIP_Link);
-                            int FirstHit_GIP = text1.IndexOf(":") + 3;
-                            Invoke(new Delegate_string((ip) => GlovalIPTextBox.Text = ip), 
-                                text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP));
-
-                            Invoke(new Delegate_bool(UI_Enabled), false);
-                        }
-                        catch (WebException)
-                        {
-                            MessageBox.Show("Connect to the internet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Invoke(new Delegate_NoArguments(() => this.Close()));
-                        }
-                    }));
-                    StartUpThread.Start();
-
-                    Action<Axis> setAxis = (axisInfo) =>
-                    {
-                        axisInfo.LabelAutoFitMaxFontSize = 8;
-                        axisInfo.LabelStyle.ForeColor = Color.Black;
-                        axisInfo.MajorGrid.Enabled = true;
-                        axisInfo.MajorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
-                        axisInfo.MinorGrid.Enabled = true;
-                        axisInfo.MinorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
-                    };
-
+                    axisInfo.LabelAutoFitMaxFontSize = 8;
+                    axisInfo.LabelStyle.ForeColor = Color.Black;
+                    axisInfo.MajorGrid.Enabled = true;
+                    axisInfo.MajorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
+                    axisInfo.MinorGrid.Enabled = true;
+                    axisInfo.MinorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
+                };
+                {
                     MainChart.Series.Clear();
                     MainChart.ChartAreas.Clear();
                     MainChart.Titles.Clear();
@@ -145,30 +137,67 @@ namespace Minecraft_Bedrock_Server_GUI
                     MainChart.ChartAreas.Add(MemoryArea);
                     MainChart.Series.Add(PlayerSeries);
                     MainChart.Series.Add(MemorySeries);
+                }//Chart setting
+
+                if (File.Exists(ServerAppricationPath))
+                {
+                    StartUpThread = new Thread(new ThreadStart(() =>
+                    {
+                        try
+                        {
+                            WebClient GetGlovalIPWC = new WebClient();
+                            string text1 = GetGlovalIPWC.DownloadString(FindGlovalIP_Link);
+                            int FirstHit_GIP = text1.IndexOf(":") + 3;
+                            Invoke(new Delegate_string((ip) => GlovalIPTextBox.Text = ip), 
+                                text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP));
+
+                            Invoke(new Delegate_int(UI_Enabled), 0);
+                        }
+                        catch (WebException)
+                        {
+                            MessageBox.Show("Connect to the internet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            Invoke(new Delegate_NoArguments(() => this.Close()));
+                        }
+                    }));
+                    StartUpThread.Start();
                 }
                 else
                 {
-                    MessageBox.Show("Server application is not found.\nPut the server application in the same directory.",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
+                    DialogResult dr = MessageBox.Show("Server application is not found.\nWould you like to download a new server?",
+                        "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dr == DialogResult.Yes)
+                    {
+                        UI_Enabled();
+                        InstallingFlag = true;
+                        Thread thread = new Thread(new ThreadStart(() => 
+                        {
+                            ServerInstaller();
+                            Invoke(new Delegate_int(UI_Enabled), 0);
+                            InstallingFlag = false;
+                        }));
+                        thread.Start();
+                    }
+                    if (dr == DialogResult.No) 
+                    {
+                        this.Close();
+                    }
                 }
             }
         }
         private void Form_Closing_evemt(object sender, FormClosingEventArgs e)
         {
-            if (StartupFlag)
+            if (RunningFlag || UpdateFlag || InstallingFlag)
             {
                 if (e.CloseReason == CloseReason.UserClosing)
                 {
-                    MessageBox.Show("The server is running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    e.Cancel = true;
-                }
-            }
-            if (UpdateFlag)
-            {
-                if (e.CloseReason == CloseReason.UserClosing)
-                {
-                    MessageBox.Show("The updater is running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string str = string.Empty;
+                    if (RunningFlag)
+                        str = "server";
+                    if (UpdateFlag)
+                        str = "updater";
+                    if (InstallingFlag)
+                        str = "installer";
+                    MessageBox.Show("The " + str + " is running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     e.Cancel = true;
                 }
             }
@@ -177,8 +206,8 @@ namespace Minecraft_Bedrock_Server_GUI
         {
             infomationWriteFlag = true;
             chartThreadFlag = true;
-            StartupFlag = true;
-            UI_Enabled(true);
+            RunningFlag = true;
+            UI_Enabled(1);
 
             MemoryBuffer = new List<float>(GRAPH_MAX_SIZE_X);
             PlayerBuffer = new List<int>(GRAPH_MAX_SIZE_X);
@@ -191,7 +220,7 @@ namespace Minecraft_Bedrock_Server_GUI
             }
 
             ServerProcess = new Process();
-            ServerProcess.StartInfo.FileName = ServerFileName;
+            ServerProcess.StartInfo.FileName = ServerAppricationPath;
             ServerProcess.StartInfo.CreateNoWindow = true;
             ServerProcess.StartInfo.UseShellExecute = false;
             ServerProcess.StartInfo.RedirectStandardInput = true;
@@ -201,7 +230,7 @@ namespace Minecraft_Bedrock_Server_GUI
             ServerProcess.Exited += new EventHandler((EHsender , EHe) => 
             {
                 Invoke(new Delegate_string(Invoke_WriteConsole), "The server has closed.\n");
-                Invoke(new Delegate_bool(UI_Enabled), false);
+                Invoke(new Delegate_int(UI_Enabled), 0);
                 Invoke(new Delegate_NoArguments(() =>
                 {
                     PlayerSeries.Points.Clear();
@@ -210,7 +239,7 @@ namespace Minecraft_Bedrock_Server_GUI
                     PlayerListRichtextBox.Text = string.Empty;
                 }));
                 chartThreadFlag = false;
-                StartupFlag = false;
+                RunningFlag = false;
             });
             ServerProcess.ErrorDataReceived += new DataReceivedEventHandler(EventHandler_ConsoleOutputHandler);
             ServerProcess.OutputDataReceived += new DataReceivedEventHandler(EventHandler_ConsoleOutputHandler);
@@ -226,7 +255,7 @@ namespace Minecraft_Bedrock_Server_GUI
                     ServerProcess.Refresh();
                     try
                     {
-                        Invoke(new Delegate_GraphData((bytes, player) => 
+                        Invoke(new Delegate_GraphData((bytes, player) =>
                         {
                             PlayerBuffer.RemoveAt(PlayerBuffer.Count - 1);
                             PlayerBuffer.Insert(0, player);
@@ -257,8 +286,7 @@ namespace Minecraft_Bedrock_Server_GUI
                                 PlayerSeries.Points.Add(new DataPoint(i, PlayerBuffer[i]));
                                 MemorySeries.Points.Add(new DataPoint(i, MemoryBuffer[i] / 1000f));
                             }
-                        }),
-                            (float)ServerProcess.WorkingSet64 / 1000, Player.Count());
+                        }), (float)ServerProcess.WorkingSet64 / 1000, Player.Count());
                     }
                     catch (InvalidOperationException)
                     {
@@ -295,43 +323,16 @@ namespace Minecraft_Bedrock_Server_GUI
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dr == DialogResult.Yes)
             {
-                if (File.Exists(UpdaterFileName)) 
+                UI_Enabled();
+                UpdateFlag = true;
+                Thread thread = new Thread(new ThreadStart(() =>
                 {
-                    UI_Enabled();
-                    UpdateFlag = true;
-                    UpdaterProcess = new Process();
-                    UpdaterProcess.StartInfo.FileName = UpdaterFileName;
-                    UpdaterProcess.StartInfo.Verb = "runas";
-                    UpdaterProcess.StartInfo.Arguments = DateTime.Now.ToString("yyyy/mm/dd HH:mm:ss");
-                    UpdaterProcess.StartInfo.ErrorDialog = true;
-                    UpdaterProcess.StartInfo.ErrorDialogParentHandle = this.Handle;
-                    UpdaterProcess.EnableRaisingEvents = true;
-                    UpdaterProcess.Exited += new EventHandler((EHsender, EHe) =>
-                    {
-                        Invoke(new Delegate_string(Invoke_WriteConsole), "The updater has closed.\n");
-                        Invoke(new Delegate_bool(UI_Enabled), false);
-                        UpdateFlag = false;
-                    });
-                    UpdaterThread = new Thread(new ThreadStart(() =>
-                    {
-                        UpdaterProcess.Start();
-                        UpdaterProcess.WaitForExit();
-                    }));
-                    try
-                    {
-                        UpdaterProcess.Start();
-                    }
-                    catch (Win32Exception)
-                    {
-                        ServerAppConsoleRichtextBox.Text += "The updater has closed.\n";
-                        UI_Enabled(false);
-                        UpdateFlag = false;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("The updater application cannot be found. Please reinstall", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                    ServerInstaller("update");
+                    Invoke(new Delegate_int(UI_Enabled), 0);
+                    UpdateFlag = false;
+
+                }));
+                thread.Start();
             }
         }
 
@@ -362,6 +363,10 @@ namespace Minecraft_Bedrock_Server_GUI
 
         private void Invoke_WriteConsole(string vs)
         {
+            if (vs.Contains("[") && vs.Contains("]"))
+            {
+                vs = vs.Remove(vs.IndexOf("["), vs.IndexOf("]") + 2);
+            }
             if (!String.IsNullOrEmpty(vs))
             {
                 if (vs.Contains("Server started"))
@@ -375,13 +380,13 @@ namespace Minecraft_Bedrock_Server_GUI
                     {
                         if (vs.Contains(data))
                         {
-                            writeInfomationBuffer += RemoveLogTime(vs);
+                            writeInfomationBuffer += vs;
                         }
                     }
                 }
                 if (vs.Contains("Player") && vs.Contains("connected"))
                 {
-                    string playerBuffer = RemoveLogTime(vs);
+                    string playerBuffer = vs;
                     if (playerBuffer.Contains("Player connected"))
                     {
                         Player.Add(playerBuffer.Remove(0, 18));
@@ -396,27 +401,111 @@ namespace Minecraft_Bedrock_Server_GUI
                         PlayerListRichtextBox.Text += i + "\n";
                     }
                 }
-                ServerAppConsoleRichtextBox.Text += vs;
+                ServerAppConsoleRichtextBox.Text += "[" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "] " + vs;
                 ServerAppConsoleRichtextBox.SelectionStart = ServerAppConsoleRichtextBox.MaxLength;
                 ServerAppConsoleRichtextBox.ScrollToCaret();
             }
         }
-        public string RemoveLogTime(string vs)
+
+        public void UI_Enabled(int i = -1)
         {
-            return vs.Remove(vs.IndexOf("["), vs.IndexOf("]") + 2);
+            serverStartToolStripMenuItem.Enabled = i >= 0 && i == 0;
+            serverCloseToolStripMenuItem.Enabled = i >= 0 && i != 0;
+            serverUpdateToolStripMenuItem.Enabled = i >= 0 && i == 0;
+            clearToolStripMenuItem.Enabled = i >= 0;
+        }
+        public bool UI_Supporter(int i)
+        {
+            return i >= 0 && i == 0;
         }
 
-        public void UI_Enabled(bool i)
+        public void ServerInstaller(string str = "")
         {
-            serverStartToolStripMenuItem.Enabled = !i;
-            serverCloseToolStripMenuItem.Enabled = i;
-            serverUpdateToolStripMenuItem.Enabled = !i;
+            Invoke(new Delegate_string(Invoke_WriteConsole), "Downloading a new server app...\n");
+
+            WebClient wc = new WebClient();
+            try
+            {
+                string SiteDownloadString = wc.DownloadString(ServerDownloadSite_Link);
+                int FirstHit = SiteDownloadString.IndexOf(ServerDownloadSearch_Link);
+                int SecondHit = SiteDownloadString.IndexOf("\"", FirstHit);
+                string ServerDownlaodLink = SiteDownloadString.Substring(FirstHit, SecondHit - FirstHit);
+                ServerDownloadLink = new Uri(ServerDownlaodLink);
+            }
+            catch (WebException)
+            {
+                Invoke(new Delegate_NoArguments(() =>
+                {
+                    MessageBox.Show("Please connect to the internet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }));
+            }
+
+            if (Directory.Exists(DownloadFolderPath))
+                DeleteDirectory(DownloadFolderPath);
+            Directory.CreateDirectory(DownloadFolderPath);
+            using (FileStream sr = new FileStream(DownloadZipPath, FileMode.Create)) { }
+            WebClient myWebClient = new WebClient();
+            myWebClient.DownloadFile(ServerDownloadLink, DownloadZipPath);
+
+            Invoke(new Delegate_string(Invoke_WriteConsole), "Extract the downloaded ZIP file...\n");
+
+            ZipFile.ExtractToDirectory(DownloadZipPath, DownloadFolderPath);
+            File.Delete(DownloadZipPath);
+            if (str == "update")
+            {
+                foreach (string sr in NewFileDaletes)
+                {
+                    File.Delete(sr);
+                }
+            }
+
+            Invoke(new Delegate_string(Invoke_WriteConsole), "Installing...\n");
+
+            DirectoryCopy(DownloadFolderPath, Application.StartupPath);
+            DeleteDirectory(DownloadFolderPath);
+
+            Invoke(new Delegate_string(Invoke_WriteConsole), "Done.\n");
         }
-        public void UI_Enabled()
+        
+        public static void DeleteDirectory(string dir)
         {
-            serverStartToolStripMenuItem.Enabled = false;
-            serverCloseToolStripMenuItem.Enabled = false;
-            serverUpdateToolStripMenuItem.Enabled = false;
+            DirectoryInfo di = new DirectoryInfo(dir);
+            //ReadonlyAttribute(di, FileAttributes.ReadOnly, FileAttributes.Normal);
+            di.Delete(true);
         }
+
+        public static void DirectoryCopy(string sourcePath, string destinationPath)
+        {
+            DirectoryInfo sourceDirectory = new DirectoryInfo(sourcePath);
+            DirectoryInfo destinationDirectory = new DirectoryInfo(destinationPath);
+            if (destinationDirectory.Exists == false)
+            {
+                destinationDirectory.Create();
+                //destinationDirectory.Attributes = sourceDirectory.Attributes;
+            }
+
+            foreach (FileInfo fileInfo in sourceDirectory.GetFiles())
+                fileInfo.CopyTo(destinationDirectory.FullName + @"\" + fileInfo.Name, true);
+            foreach (DirectoryInfo directoryInfo in sourceDirectory.GetDirectories()) 
+            {
+                string destinationDirec = destinationDirectory.FullName + @"\" + directoryInfo.Name;
+                if (destinationDirec != WorldDirectoryName)
+                {
+                    DirectoryCopy(directoryInfo.FullName, destinationDirec);
+                }
+            }
+        }
+
+        //public static void ReadonlyAttribute(DirectoryInfo dirInfo, FileAttributes OldFA, FileAttributes NewFA)
+        //{
+        //    if ((dirInfo.Attributes & OldFA) == OldFA)
+        //        dirInfo.Attributes = NewFA;
+        //    foreach (FileInfo fi in dirInfo.GetFiles())
+        //        if ((fi.Attributes & OldFA) == OldFA)
+        //            fi.Attributes = NewFA;
+        //    foreach (DirectoryInfo di in dirInfo.GetDirectories())
+        //        ReadonlyAttribute(di, OldFA, NewFA);
+        //}
     }
 }
