@@ -148,8 +148,8 @@ namespace Minecraft_Bedrock_Server_GUI
                             WebClient GetGlovalIPWC = new WebClient();
                             string text1 = GetGlovalIPWC.DownloadString(FindGlovalIP_Link);
                             int FirstHit_GIP = text1.IndexOf(":") + 3;
-                            Invoke(new Delegate_string((ip) => GlovalIPTextBox.Text = ip), 
-                                text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP));
+                            Invoke(new Delegate_NoArguments(() => GlovalIPTextBox.Text = 
+                                text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP)));
 
                             Invoke(new Delegate_int(UI_Enabled), 0);
                         }
@@ -366,8 +366,8 @@ namespace Minecraft_Bedrock_Server_GUI
 
                 if (vs.Contains("Server started"))
                 {
-                    Invoke(new Delegate_string((str) => 
-                        InfomationRichtextBox.Text = str), writeInfomationBuffer.TrimEnd('\n'));
+                    Invoke(new Delegate_NoArguments(() => 
+                        InfomationRichtextBox.Text = writeInfomationBuffer.TrimEnd('\n')));
                     writeInfomationBuffer = string.Empty;
                     infomationWriteFlag = false;
                 }
