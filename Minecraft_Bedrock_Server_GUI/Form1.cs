@@ -357,25 +357,22 @@ namespace Minecraft_Bedrock_Server_GUI
         {
             if (!String.IsNullOrEmpty(outLine.Data))
             {
-                Invoke(new Delegate_string(Invoke_WriteConsole), outLine.Data + "\n");
-            }
-        }
+                string vs = outLine.Data + "\n";
 
-        private void Invoke_WriteConsole(string vs)
-        {
-            if (vs.Contains("[") && vs.Contains("]"))
-            {
-                vs = vs.Remove(vs.IndexOf("["), vs.IndexOf("]") + 2);
-            }
-            if (!String.IsNullOrEmpty(vs))
-            {
+                if (vs.Contains("[") && vs.Contains("]"))
+                {
+                    vs = vs.Remove(vs.IndexOf("["), vs.IndexOf("]") + 2);
+                }
+
                 if (vs.Contains("Server started"))
                 {
-                    InfomationRichtextBox.Text = writeInfomationBuffer.TrimEnd('\n');
+                    Invoke(new Delegate_string((str) => 
+                        InfomationRichtextBox.Text = str), writeInfomationBuffer.TrimEnd('\n'));
                     writeInfomationBuffer = string.Empty;
                     infomationWriteFlag = false;
-                } 
-                if (infomationWriteFlag) {
+                }
+                if (infomationWriteFlag)
+                {
                     foreach (string data in ShowInfomation)
                     {
                         if (vs.Contains(data))
@@ -395,12 +392,24 @@ namespace Minecraft_Bedrock_Server_GUI
                     {
                         Player.Remove(playerBuffer.Remove(0, 21));
                     }
-                    PlayerListRichtextBox.Text = string.Empty;
-                    foreach (string i in Player)
+                    Invoke(new Delegate_NoArguments(() => 
                     {
-                        PlayerListRichtextBox.Text += i + "\n";
-                    }
+                        PlayerListRichtextBox.Text = string.Empty;
+                        foreach (string i in Player)
+                        {
+                            PlayerListRichtextBox.Text += i + "\n";
+                        }
+                    }));
                 }
+
+                Invoke(new Delegate_string(Invoke_WriteConsole), vs);
+            }
+        }
+
+        private void Invoke_WriteConsole(string vs)
+        {
+            if (!String.IsNullOrEmpty(vs))
+            {
                 ServerAppConsoleRichtextBox.Text += "[" + DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "] " + vs;
                 ServerAppConsoleRichtextBox.SelectionStart = ServerAppConsoleRichtextBox.MaxLength;
                 ServerAppConsoleRichtextBox.ScrollToCaret();
@@ -413,10 +422,7 @@ namespace Minecraft_Bedrock_Server_GUI
             serverCloseToolStripMenuItem.Enabled = i >= 0 && i != 0;
             serverUpdateToolStripMenuItem.Enabled = i >= 0 && i == 0;
             clearToolStripMenuItem.Enabled = i >= 0;
-        }
-        public bool UI_Supporter(int i)
-        {
-            return i >= 0 && i == 0;
+            ConsoleInputTextBox.Enabled = i >= 0 && i != 0;
         }
 
         public void ServerInstaller(string str = "")
