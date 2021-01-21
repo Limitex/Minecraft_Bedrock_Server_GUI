@@ -80,89 +80,96 @@ namespace Minecraft_Bedrock_Server_GUI
         {
             if (Process.GetProcessesByName(ServerAppricationName).Length > 0)
             {
-                MessageBox.Show("The server is already running.\nClose the your running server.", "warning",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.Close();
-            }
-            else
-            {
-                Action<Axis> setAxis = (axisInfo) =>
+                DialogResult dr = MessageBox.Show("The server is already running.\nDo you want to kill it?", "warning",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                
+                if (dr == DialogResult.OK)
                 {
-                    axisInfo.LabelAutoFitMaxFontSize = 8;
-                    axisInfo.LabelStyle.ForeColor = Color.Black;
-                    axisInfo.MajorGrid.Enabled = true;
-                    axisInfo.MajorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
-                    axisInfo.MinorGrid.Enabled = true;
-                    axisInfo.MinorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
-                };
+                    Process[] ps = Process.GetProcessesByName(ServerAppricationName);
+                    ps[0].Kill();
+                }
+                else
                 {
-                    MainChart.Series.Clear();
-                    MainChart.ChartAreas.Clear();
-                    MainChart.Titles.Clear();
-                    MainChart.Legends.Clear();
-
-                    PlayerArea = new ChartArea(PlayerAriaName);
-                    PlayerArea.AxisX.Title = "Seconds [s]";
-                    PlayerArea.AxisY.Title = "Player [p]";
-                    PlayerArea.AxisX.Minimum = 0;
-                    PlayerArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
-                    PlayerArea.AxisY.Maximum = PlayerGraphMaxSize_Y;
-                    setAxis(PlayerArea.AxisX);
-                    setAxis(PlayerArea.AxisY);
-
-                    MemoryArea = new ChartArea(MemoryAriaName);
-                    MemoryArea.AxisX.Title = "Seconds [s]";
-                    MemoryArea.AxisY.Title = "Capacity [MB]";
-                    MemoryArea.AxisX.Minimum = 0;
-                    MemoryArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
-                    MemoryArea.AxisY.Maximum = MemoryGraphMaxSize_Y;
-                    setAxis(MemoryArea.AxisX);
-                    setAxis(MemoryArea.AxisY);
-
-                    PlayerSeries = new Series();
-                    PlayerSeries.LegendText = "Player [person]";
-                    PlayerSeries.ChartType = SeriesChartType.Area;
-                    PlayerSeries.Color = ColorTranslator.FromHtml("#3333ff");
-                    PlayerSeries.ChartArea = PlayerAriaName;
-
-                    MemorySeries = new Series();
-                    MemorySeries.LegendText = "Used Memory [MB]";
-                    MemorySeries.ChartType = SeriesChartType.Area;
-                    MemorySeries.Color = ColorTranslator.FromHtml("#FFA500");
-                    MemorySeries.ChartArea = MemoryAriaName;
-
-                    MainChart.ChartAreas.Add(PlayerArea);
-                    MainChart.ChartAreas.Add(MemoryArea);
-                    MainChart.Series.Add(PlayerSeries);
-                    MainChart.Series.Add(MemorySeries);
-                }//Chart setting
-
-                UI_Enabled(0);
-
-                FindGlovalIP();
-
-                if (!File.Exists(ServerAppricationPath))
-                {
-                    DialogResult dr = MessageBox.Show("Server application is not found.\nWould you like to download a new server?",
-                        "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (dr == DialogResult.Yes)
-                    {
-                        UI_Enabled();
-                        InstallingFlag = true;
-                        Thread thread = new Thread(new ThreadStart(() => 
-                        {
-                            ServerInstaller();
-                            Invoke(new Delegate_int(UI_Enabled), 0);
-                            InstallingFlag = false;
-                        }));
-                        thread.Start();
-                    }
-                    if (dr == DialogResult.No) 
-                    {
-                        this.Close();
-                    }
+                    this.Close();
                 }
             }
+           
+            Action<Axis> setAxis = (axisInfo) =>
+            {
+                axisInfo.LabelAutoFitMaxFontSize = 8;
+                axisInfo.LabelStyle.ForeColor = Color.Black;
+                axisInfo.MajorGrid.Enabled = true;
+                axisInfo.MajorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
+                axisInfo.MinorGrid.Enabled = true;
+                axisInfo.MinorGrid.LineColor = ColorTranslator.FromHtml("#C0C0C0");
+            };
+            {
+                MainChart.Series.Clear();
+                MainChart.ChartAreas.Clear();
+                MainChart.Titles.Clear();
+                MainChart.Legends.Clear();
+
+                PlayerArea = new ChartArea(PlayerAriaName);
+                PlayerArea.AxisX.Title = "Seconds [s]";
+                PlayerArea.AxisY.Title = "Player [p]";
+                PlayerArea.AxisX.Minimum = 0;
+                PlayerArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
+                PlayerArea.AxisY.Maximum = PlayerGraphMaxSize_Y;
+                setAxis(PlayerArea.AxisX);
+                setAxis(PlayerArea.AxisY);
+
+                MemoryArea = new ChartArea(MemoryAriaName);
+                MemoryArea.AxisX.Title = "Seconds [s]";
+                MemoryArea.AxisY.Title = "Capacity [MB]";
+                MemoryArea.AxisX.Minimum = 0;
+                MemoryArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
+                MemoryArea.AxisY.Maximum = MemoryGraphMaxSize_Y;
+                setAxis(MemoryArea.AxisX);
+                setAxis(MemoryArea.AxisY);
+
+                PlayerSeries = new Series();
+                PlayerSeries.LegendText = "Player [person]";
+                PlayerSeries.ChartType = SeriesChartType.Area;
+                PlayerSeries.Color = ColorTranslator.FromHtml("#3333ff");
+                PlayerSeries.ChartArea = PlayerAriaName;
+
+                MemorySeries = new Series();
+                MemorySeries.LegendText = "Used Memory [MB]";
+                MemorySeries.ChartType = SeriesChartType.Area;
+                MemorySeries.Color = ColorTranslator.FromHtml("#FFA500");
+                MemorySeries.ChartArea = MemoryAriaName;
+
+                MainChart.ChartAreas.Add(PlayerArea);
+                MainChart.ChartAreas.Add(MemoryArea);
+                MainChart.Series.Add(PlayerSeries);
+                MainChart.Series.Add(MemorySeries);
+            } //Chart setting
+
+            UI_Enabled(0);
+
+            FindGlovalIP();
+
+            if (!File.Exists(ServerAppricationPath))
+            {
+                DialogResult dr = MessageBox.Show("Server application is not found.\nWould you like to download a new server?",
+                    "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dr == DialogResult.Yes)
+                {
+                    UI_Enabled();
+                    InstallingFlag = true;
+                    Thread thread = new Thread(new ThreadStart(() => 
+                    {
+                        ServerInstaller();
+                        Invoke(new Delegate_int(UI_Enabled), 0);
+                        InstallingFlag = false;
+                    }));
+                    thread.Start();
+                }
+                if (dr == DialogResult.No) 
+                {
+                    this.Close();
+                }
+            } 
         }
         private void Form_Closing_evemt(object sender, FormClosingEventArgs e)
         {
