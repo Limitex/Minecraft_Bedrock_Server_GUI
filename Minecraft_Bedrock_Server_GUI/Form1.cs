@@ -20,7 +20,6 @@ namespace Minecraft_Bedrock_Server_GUI
     {
         Process ServerProcess;
         StreamWriter ServerStreamWriter;
-        Thread StartUpThread;
         Thread ChartWriteThread;
         delegate void Delegate_string(string vs);
         delegate void Delegate_int(int i);
@@ -79,7 +78,6 @@ namespace Minecraft_Bedrock_Server_GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UI_Enabled();
             if (Process.GetProcessesByName(ServerAppricationName).Length > 0)
             {
                 MessageBox.Show("The server is already running.\nClose the your running server.", "warning",
@@ -139,29 +137,11 @@ namespace Minecraft_Bedrock_Server_GUI
                     MainChart.Series.Add(MemorySeries);
                 }//Chart setting
 
-                if (File.Exists(ServerAppricationPath))
-                {
-                    StartUpThread = new Thread(new ThreadStart(() =>
-                    {
-                        try
-                        {
-                            WebClient GetGlovalIPWC = new WebClient();
-                            string text1 = GetGlovalIPWC.DownloadString(FindGlovalIP_Link);
-                            int FirstHit_GIP = text1.IndexOf(":") + 3;
-                            Invoke(new Delegate_NoArguments(() => GlovalIPTextBox.Text = 
-                                text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP)));
+                UI_Enabled(0);
 
-                            Invoke(new Delegate_int(UI_Enabled), 0);
-                        }
-                        catch (WebException)
-                        {
-                            MessageBox.Show("Connect to the internet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            Invoke(new Delegate_NoArguments(() => this.Close()));
-                        }
-                    }));
-                    StartUpThread.Start();
-                }
-                else
+                FindGlovalIP();
+
+                if (!File.Exists(ServerAppricationPath))
                 {
                     DialogResult dr = MessageBox.Show("Server application is not found.\nWould you like to download a new server?",
                         "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -208,6 +188,8 @@ namespace Minecraft_Bedrock_Server_GUI
             chartThreadFlag = true;
             RunningFlag = true;
             UI_Enabled(1);
+
+            FindGlovalIP();
 
             MemoryBuffer = new List<float>(GRAPH_MAX_SIZE_X);
             PlayerBuffer = new List<int>(GRAPH_MAX_SIZE_X);
@@ -404,6 +386,27 @@ namespace Minecraft_Bedrock_Server_GUI
 
                 Invoke(new Delegate_string(Invoke_WriteConsole), vs);
             }
+        }
+
+        private void FindGlovalIP()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    WebClient GetGlovalIPWC = new WebClient();
+                    string text1 = GetGlovalIPWC.DownloadString(FindGlovalIP_Link);
+                    int FirstHit_GIP = text1.IndexOf(":") + 3;
+                    Invoke(new Delegate_NoArguments(() => GlovalIPTextBox.Text =
+                        text1.Substring(FirstHit_GIP, text1.IndexOf("\"", FirstHit_GIP) - FirstHit_GIP)));
+                }
+                catch (WebException)
+                {
+                    MessageBox.Show("Connect to the internet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Invoke(new Delegate_NoArguments(() => this.Close()));
+                }
+            }));
+            thread.Start();
         }
 
         private void Invoke_WriteConsole(string vs)
