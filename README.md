@@ -4,14 +4,18 @@ Maintainability and convenience are improved compared to not using it.
 
 Platform : Windows
 
-> Minecraft bedrock server (コンソールアプリ)を操作、見やすくする外部サポートソフトウェアです。
-使用しない場合に比べ、保守性と利便性が向上します。
-
 # How to use
-  Insert the built executable file into the same directory as the server software.
-  > サーバーソフトウェアのディレクトリにこのソフトウェアをそのまま挿入してください。
+When you first run this software, you can download the server software to this software directory.
+This specification runs when the server software cannot be found.
+Normally you start the server from the Tools menu and end it.
+Click Update on the Tools menu to perform the server update.
+
+> note
+> Do not put anything in the directory created by this software. World data and configuration files may be damaged.
+> 
   
 # Funktion
+  2021/1/21 : I implemented update function and automatic download.
   2021/1/17 : I added automatic server update function.
 
 # Screenshot
@@ -24,8 +28,4 @@ The server information is displayed on the right side.
 At the bottom right, you can easily check the entry status of the player, which was difficult to grasp.
 In the center, the transition of the player and the memory usage status are displayed up to 5 minutes ago.
 
-> 左側にサーバーソフトウェアコンソールが表示されます。
-その下のテキストボックスにコマンドを入力し、Enterで実行(送信)します。
-サーバー情報は右上に表示されます。
-右下では、把握しづらかったプレイヤーの入室状況を簡単に確認できます。
-中央には、5分前までのプレーヤーの遷移とメモリー使用状況を表示しています。
+> Translated by DeepL and Google from japanese.
