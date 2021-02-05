@@ -96,7 +96,21 @@ namespace Minecraft_Bedrock_Server_GUI
             "Extract the downloaded ZIP file...",//20
             "Installing...",
             "Done.",
-
+            "File",
+            "Operation",
+            "Server Start",
+            "Server Close",
+            "Open directory in explorer",
+            "Clear",
+            "Language",
+            "Server update",
+            "Server Console",
+            "Server Status",
+            "Infomation",
+            "Server Infomation",
+            "Gloval IP",
+            "Player List",
+            "Copy"
         };
 
         public Form1()
@@ -105,7 +119,27 @@ namespace Minecraft_Bedrock_Server_GUI
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        { 
+        {
+
+
+
+
+            fileToolStripMenuItem.Text = Language[23];
+            operationToolStripMenuItem.Text = Language[24];
+            serverStartToolStripMenuItem.Text = Language[25];
+            serverCloseToolStripMenuItem.Text = Language[26];
+            openDirectoryInExplorerToolStripMenuItem.Text = Language[27];
+            clearToolStripMenuItem.Text = Language[28];
+            languageToolStripMenuItem.Text = Language[29];
+            serverUpdateToolStripMenuItem.Text = Language[30];
+            ConsoleGroupBox.Text = Language[31];
+            ServerStatusGroupBox.Text = Language[32];
+            InfomationGroupBox.Text = Language[33];
+            ServerInfoLabel.Text = Language[34];
+            GlovalIPLabel.Text = Language[35];
+            PlayerListLabel.Text = Language[36];
+            CopyButton.Text = Language[37];
+
             if (Process.GetProcessesByName(ServerAppricationName).Length > 0)
             {
                 DialogResult dr = MessageBox.Show(Language[4], Language[0],

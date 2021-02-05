@@ -32,7 +32,7 @@ namespace Minecraft_Bedrock_Server_GUI
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ConsoleGroupBox = new System.Windows.Forms.GroupBox();
             this.ConsoleInputTextBox = new System.Windows.Forms.TextBox();
             this.ServerAppConsoleRichtextBox = new System.Windows.Forms.RichTextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -43,36 +43,36 @@ namespace Minecraft_Bedrock_Server_GUI
             this.openDirectoryInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ServerStatusGroupBox = new System.Windows.Forms.GroupBox();
             this.MainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.InfomationGroupBox = new System.Windows.Forms.GroupBox();
+            this.PlayerListLabel = new System.Windows.Forms.Label();
+            this.GlovalIPLabel = new System.Windows.Forms.Label();
+            this.ServerInfoLabel = new System.Windows.Forms.Label();
             this.CopyButton = new System.Windows.Forms.Button();
             this.GlovalIPTextBox = new System.Windows.Forms.TextBox();
             this.PlayerListRichtextBox = new System.Windows.Forms.RichTextBox();
             this.InfomationRichtextBox = new System.Windows.Forms.RichTextBox();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1.SuspendLayout();
+            this.ConsoleGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.ServerStatusGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.InfomationGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // ConsoleGroupBox
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ConsoleGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox1.Controls.Add(this.ConsoleInputTextBox);
-            this.groupBox1.Controls.Add(this.ServerAppConsoleRichtextBox);
-            this.groupBox1.Location = new System.Drawing.Point(12, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(412, 522);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Server Console";
+            this.ConsoleGroupBox.Controls.Add(this.ConsoleInputTextBox);
+            this.ConsoleGroupBox.Controls.Add(this.ServerAppConsoleRichtextBox);
+            this.ConsoleGroupBox.Location = new System.Drawing.Point(12, 27);
+            this.ConsoleGroupBox.Name = "ConsoleGroupBox";
+            this.ConsoleGroupBox.Size = new System.Drawing.Size(412, 522);
+            this.ConsoleGroupBox.TabIndex = 0;
+            this.ConsoleGroupBox.TabStop = false;
+            this.ConsoleGroupBox.Text = "Server Console";
             // 
             // ConsoleInputTextBox
             // 
@@ -131,14 +131,14 @@ namespace Minecraft_Bedrock_Server_GUI
             // serverStartToolStripMenuItem
             // 
             this.serverStartToolStripMenuItem.Name = "serverStartToolStripMenuItem";
-            this.serverStartToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.serverStartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.serverStartToolStripMenuItem.Text = "Server Start";
             this.serverStartToolStripMenuItem.Click += new System.EventHandler(this.ServerStartToolStripMenuItem_Click);
             // 
             // serverCloseToolStripMenuItem
             // 
             this.serverCloseToolStripMenuItem.Name = "serverCloseToolStripMenuItem";
-            this.serverCloseToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.serverCloseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.serverCloseToolStripMenuItem.Text = "Server Close";
             this.serverCloseToolStripMenuItem.Click += new System.EventHandler(this.ServerCloseToolStripMenuItem_Click);
             // 
@@ -163,18 +163,18 @@ namespace Minecraft_Bedrock_Server_GUI
             this.serverUpdateToolStripMenuItem.Text = "Server update";
             this.serverUpdateToolStripMenuItem.Click += new System.EventHandler(this.serverUpdateToolStripMenuItem_Click);
             // 
-            // groupBox2
+            // ServerStatusGroupBox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ServerStatusGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.MainChart);
-            this.groupBox2.Location = new System.Drawing.Point(430, 27);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(424, 522);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Server Status";
+            this.ServerStatusGroupBox.Controls.Add(this.MainChart);
+            this.ServerStatusGroupBox.Location = new System.Drawing.Point(430, 27);
+            this.ServerStatusGroupBox.Name = "ServerStatusGroupBox";
+            this.ServerStatusGroupBox.Size = new System.Drawing.Size(424, 522);
+            this.ServerStatusGroupBox.TabIndex = 2;
+            this.ServerStatusGroupBox.TabStop = false;
+            this.ServerStatusGroupBox.Text = "Server Status";
             // 
             // MainChart
             // 
@@ -195,50 +195,50 @@ namespace Minecraft_Bedrock_Server_GUI
             this.MainChart.TabIndex = 0;
             this.MainChart.Text = "chart1";
             // 
-            // groupBox3
+            // InfomationGroupBox
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.InfomationGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.CopyButton);
-            this.groupBox3.Controls.Add(this.GlovalIPTextBox);
-            this.groupBox3.Controls.Add(this.PlayerListRichtextBox);
-            this.groupBox3.Controls.Add(this.InfomationRichtextBox);
-            this.groupBox3.Location = new System.Drawing.Point(860, 27);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(212, 522);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Infomation";
+            this.InfomationGroupBox.Controls.Add(this.PlayerListLabel);
+            this.InfomationGroupBox.Controls.Add(this.GlovalIPLabel);
+            this.InfomationGroupBox.Controls.Add(this.ServerInfoLabel);
+            this.InfomationGroupBox.Controls.Add(this.CopyButton);
+            this.InfomationGroupBox.Controls.Add(this.GlovalIPTextBox);
+            this.InfomationGroupBox.Controls.Add(this.PlayerListRichtextBox);
+            this.InfomationGroupBox.Controls.Add(this.InfomationRichtextBox);
+            this.InfomationGroupBox.Location = new System.Drawing.Point(860, 27);
+            this.InfomationGroupBox.Name = "InfomationGroupBox";
+            this.InfomationGroupBox.Size = new System.Drawing.Size(212, 522);
+            this.InfomationGroupBox.TabIndex = 3;
+            this.InfomationGroupBox.TabStop = false;
+            this.InfomationGroupBox.Text = "Infomation";
             // 
-            // label3
+            // PlayerListLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 240);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Player List";
+            this.PlayerListLabel.AutoSize = true;
+            this.PlayerListLabel.Location = new System.Drawing.Point(6, 240);
+            this.PlayerListLabel.Name = "PlayerListLabel";
+            this.PlayerListLabel.Size = new System.Drawing.Size(60, 12);
+            this.PlayerListLabel.TabIndex = 6;
+            this.PlayerListLabel.Text = "Player List";
             // 
-            // label2
+            // GlovalIPLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 203);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 12);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Gloval IP";
+            this.GlovalIPLabel.AutoSize = true;
+            this.GlovalIPLabel.Location = new System.Drawing.Point(6, 203);
+            this.GlovalIPLabel.Name = "GlovalIPLabel";
+            this.GlovalIPLabel.Size = new System.Drawing.Size(51, 12);
+            this.GlovalIPLabel.TabIndex = 5;
+            this.GlovalIPLabel.Text = "Gloval IP";
             // 
-            // label1
+            // ServerInfoLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Server Infomation";
+            this.ServerInfoLabel.AutoSize = true;
+            this.ServerInfoLabel.Location = new System.Drawing.Point(6, 15);
+            this.ServerInfoLabel.Name = "ServerInfoLabel";
+            this.ServerInfoLabel.Size = new System.Drawing.Size(95, 12);
+            this.ServerInfoLabel.TabIndex = 4;
+            this.ServerInfoLabel.Text = "Server Infomation";
             // 
             // CopyButton
             // 
@@ -297,9 +297,9 @@ namespace Minecraft_Bedrock_Server_GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1084, 561);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.InfomationGroupBox);
+            this.Controls.Add(this.ServerStatusGroupBox);
+            this.Controls.Add(this.ConsoleGroupBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(1100, 600);
@@ -307,14 +307,14 @@ namespace Minecraft_Bedrock_Server_GUI
             this.Text = "Minecraft Bedrock Server GUI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Closing_evemt);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.ConsoleGroupBox.ResumeLayout(false);
+            this.ConsoleGroupBox.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.ServerStatusGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MainChart)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.InfomationGroupBox.ResumeLayout(false);
+            this.InfomationGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,7 +322,7 @@ namespace Minecraft_Bedrock_Server_GUI
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox ConsoleGroupBox;
         private System.Windows.Forms.TextBox ConsoleInputTextBox;
         private System.Windows.Forms.RichTextBox ServerAppConsoleRichtextBox;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -330,12 +330,12 @@ namespace Minecraft_Bedrock_Server_GUI
         private System.Windows.Forms.ToolStripMenuItem operationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serverStartToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serverCloseToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox ServerStatusGroupBox;
         private System.Windows.Forms.DataVisualization.Charting.Chart MainChart;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox InfomationGroupBox;
+        private System.Windows.Forms.Label PlayerListLabel;
+        private System.Windows.Forms.Label GlovalIPLabel;
+        private System.Windows.Forms.Label ServerInfoLabel;
         private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.TextBox GlovalIPTextBox;
         private System.Windows.Forms.RichTextBox PlayerListRichtextBox;
