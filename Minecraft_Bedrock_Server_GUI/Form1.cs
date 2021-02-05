@@ -155,15 +155,24 @@ namespace Minecraft_Bedrock_Server_GUI
                     "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dr == DialogResult.Yes)
                 {
-                    UI_Enabled();
-                    InstallingFlag = true;
-                    Thread thread = new Thread(new ThreadStart(() => 
+                    DialogResult drSec = MessageBox.Show("If the server is already in this directory, everything will be rewritten. Are you sure?",
+                        "warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    if (drSec == DialogResult.OK)
                     {
-                        ServerInstaller();
-                        Invoke(new Delegate_int(UI_Enabled), 0);
-                        InstallingFlag = false;
-                    }));
-                    thread.Start();
+                        UI_Enabled();
+                        InstallingFlag = true;
+                        Thread thread = new Thread(new ThreadStart(() =>
+                        {
+                            ServerInstaller();
+                            Invoke(new Delegate_int(UI_Enabled), 0);
+                            InstallingFlag = false;
+                        }));
+                        thread.Start();
+                    }
+                    if (drSec == DialogResult.Cancel)
+                    {
+                        this.Close();
+                    }
                 }
                 if (dr == DialogResult.No) 
                 {
@@ -312,6 +321,7 @@ namespace Minecraft_Bedrock_Server_GUI
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dr == DialogResult.Yes)
             {
+
                 UI_Enabled();
                 UpdateFlag = true;
                 Thread thread = new Thread(new ThreadStart(() =>
