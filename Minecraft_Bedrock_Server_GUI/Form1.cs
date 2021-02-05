@@ -71,16 +71,44 @@ namespace Minecraft_Bedrock_Server_GUI
             Path.Combine(DownloadFolderPath, @"release-notes.txt")
         };
 
+        public static string[] Language =
+        {
+            "Warning",
+            "Infomation",
+            "Update",
+            "Error",
+            "The server is already running.\nDo you want to kill it?",
+            "Server application is not found.\nWould you like to download a new server?",
+            "If the server is already in this directory, everything will be rewritten. Are you sure?",
+            "Player is in the server now.\nDo you close it ? ",
+            "Do you want to perform the update?",
+            "Please connect to the internet",
+            "The ", //10
+            "Server",
+            "Updater",
+            "Installer",
+            " is running.",
+            "Seconds [s]",
+            "Player [p]",
+            "Capacity [MB]",
+            "The server has closed.",
+            "Downloading a new server app...",
+            "Extract the downloaded ZIP file...",//20
+            "Installing...",
+            "Done.",
+
+        };
+
         public Form1()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        { 
             if (Process.GetProcessesByName(ServerAppricationName).Length > 0)
             {
-                DialogResult dr = MessageBox.Show("The server is already running.\nDo you want to kill it?", "warning",
+                DialogResult dr = MessageBox.Show(Language[4], Language[0],
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 
                 if (dr == DialogResult.OK)
@@ -110,8 +138,8 @@ namespace Minecraft_Bedrock_Server_GUI
                 MainChart.Legends.Clear();
 
                 PlayerArea = new ChartArea(PlayerAriaName);
-                PlayerArea.AxisX.Title = "Seconds [s]";
-                PlayerArea.AxisY.Title = "Player [p]";
+                PlayerArea.AxisX.Title = Language[15];
+                PlayerArea.AxisY.Title = Language[16];
                 PlayerArea.AxisX.Minimum = 0;
                 PlayerArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
                 PlayerArea.AxisY.Maximum = PlayerGraphMaxSize_Y;
@@ -119,8 +147,8 @@ namespace Minecraft_Bedrock_Server_GUI
                 setAxis(PlayerArea.AxisY);
 
                 MemoryArea = new ChartArea(MemoryAriaName);
-                MemoryArea.AxisX.Title = "Seconds [s]";
-                MemoryArea.AxisY.Title = "Capacity [MB]";
+                MemoryArea.AxisX.Title = Language[15];
+                MemoryArea.AxisY.Title = Language[17];
                 MemoryArea.AxisX.Minimum = 0;
                 MemoryArea.AxisX.Maximum = GRAPH_MAX_SIZE_X;
                 MemoryArea.AxisY.Maximum = MemoryGraphMaxSize_Y;
@@ -128,13 +156,13 @@ namespace Minecraft_Bedrock_Server_GUI
                 setAxis(MemoryArea.AxisY);
 
                 PlayerSeries = new Series();
-                PlayerSeries.LegendText = "Player [person]";
+                PlayerSeries.LegendText = Language[16];
                 PlayerSeries.ChartType = SeriesChartType.Area;
                 PlayerSeries.Color = ColorTranslator.FromHtml("#3333ff");
                 PlayerSeries.ChartArea = PlayerAriaName;
 
                 MemorySeries = new Series();
-                MemorySeries.LegendText = "Used Memory [MB]";
+                MemorySeries.LegendText = Language[17];
                 MemorySeries.ChartType = SeriesChartType.Area;
                 MemorySeries.Color = ColorTranslator.FromHtml("#FFA500");
                 MemorySeries.ChartArea = MemoryAriaName;
@@ -151,12 +179,12 @@ namespace Minecraft_Bedrock_Server_GUI
 
             if (!File.Exists(ServerAppricationPath))
             {
-                DialogResult dr = MessageBox.Show("Server application is not found.\nWould you like to download a new server?",
-                    "Infomation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult dr = MessageBox.Show(Language[5],
+                    Language[1], MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dr == DialogResult.Yes)
                 {
-                    DialogResult drSec = MessageBox.Show("If the server is already in this directory, everything will be rewritten. Are you sure?",
-                        "warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                    DialogResult drSec = MessageBox.Show(Language[6],
+                        Language[0], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     if (drSec == DialogResult.OK)
                     {
                         UI_Enabled();
@@ -188,12 +216,12 @@ namespace Minecraft_Bedrock_Server_GUI
                 {
                     string str = string.Empty;
                     if (RunningFlag)
-                        str = "server";
+                        str = Language[11];
                     if (UpdateFlag)
-                        str = "updater";
+                        str = Language[12];
                     if (InstallingFlag)
-                        str = "installer";
-                    MessageBox.Show("The " + str + " is running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        str = Language[13];
+                    MessageBox.Show(Language[10] + str + Language[14], Language[0], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     e.Cancel = true;
                 }
             }
@@ -227,7 +255,7 @@ namespace Minecraft_Bedrock_Server_GUI
             ServerProcess.EnableRaisingEvents = true;
             ServerProcess.Exited += new EventHandler((EHsender , EHe) => 
             {
-                Invoke(new Delegate_string(Invoke_WriteConsole), "The server has closed.\n");
+                Invoke(new Delegate_string(Invoke_WriteConsole), Language[18] + "\n");
                 Invoke(new Delegate_int(UI_Enabled), 0);
                 Invoke(new Delegate_NoArguments(() =>
                 {
@@ -304,7 +332,7 @@ namespace Minecraft_Bedrock_Server_GUI
         {
             if (Player.Count > 0)
             {
-                DialogResult dr = MessageBox.Show("Player is in the server now.\nDo you close it ? ", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult dr = MessageBox.Show(Language[7], Language[0], MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dr == DialogResult.Yes)
                 {
                     ServerStreamWriter.WriteLine("stop");
@@ -317,7 +345,7 @@ namespace Minecraft_Bedrock_Server_GUI
         }
         private void serverUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Do you want to perform the update?", "Update", 
+            DialogResult dr = MessageBox.Show(Language[8], Language[2], 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dr == DialogResult.Yes)
             {
@@ -419,7 +447,7 @@ namespace Minecraft_Bedrock_Server_GUI
                 }
                 catch (WebException)
                 {
-                    MessageBox.Show("Connect to the internet.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Language[9], Language[3], MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Invoke(new Delegate_NoArguments(() => this.Close()));
                 }
             }));
@@ -443,11 +471,12 @@ namespace Minecraft_Bedrock_Server_GUI
             serverUpdateToolStripMenuItem.Enabled = i >= 0 && i == 0;
             clearToolStripMenuItem.Enabled = i >= 0;
             ConsoleInputTextBox.Enabled = i >= 0 && i != 0;
+            languageToolStripMenuItem.Enabled = i >= 0 && i == 0;
         }
 
         public void ServerInstaller(string str = "")
         {
-            Invoke(new Delegate_string(Invoke_WriteConsole), "Downloading a new server app...\n");
+            Invoke(new Delegate_string(Invoke_WriteConsole), Language[19] + "\n");
 
             WebClient wc = new WebClient();
             try
@@ -462,7 +491,7 @@ namespace Minecraft_Bedrock_Server_GUI
             {
                 Invoke(new Delegate_NoArguments(() =>
                 {
-                    MessageBox.Show("Please connect to the internet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Language[9], Language[3], MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                 }));
             }
@@ -474,7 +503,7 @@ namespace Minecraft_Bedrock_Server_GUI
             WebClient myWebClient = new WebClient();
             myWebClient.DownloadFile(ServerDownloadLink, DownloadZipPath);
 
-            Invoke(new Delegate_string(Invoke_WriteConsole), "Extract the downloaded ZIP file...\n");
+            Invoke(new Delegate_string(Invoke_WriteConsole), Language[20] + "\n");
 
             ZipFile.ExtractToDirectory(DownloadZipPath, DownloadFolderPath);
             File.Delete(DownloadZipPath);
@@ -486,12 +515,12 @@ namespace Minecraft_Bedrock_Server_GUI
                 }
             }
 
-            Invoke(new Delegate_string(Invoke_WriteConsole), "Installing...\n");
+            Invoke(new Delegate_string(Invoke_WriteConsole), Language[21] + "\n");
 
             DirectoryCopy(DownloadFolderPath, Application.StartupPath);
             DeleteDirectory(DownloadFolderPath);
 
-            Invoke(new Delegate_string(Invoke_WriteConsole), "Done.\n");
+            Invoke(new Delegate_string(Invoke_WriteConsole), Language[22] + "\n");
         }
         
         public static void DeleteDirectory(string dir)

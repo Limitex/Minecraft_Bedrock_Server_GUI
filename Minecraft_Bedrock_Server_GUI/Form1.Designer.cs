@@ -40,6 +40,7 @@ namespace Minecraft_Bedrock_Server_GUI
             this.operationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDirectoryInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -52,7 +53,7 @@ namespace Minecraft_Bedrock_Server_GUI
             this.GlovalIPTextBox = new System.Windows.Forms.TextBox();
             this.PlayerListRichtextBox = new System.Windows.Forms.RichTextBox();
             this.InfomationRichtextBox = new System.Windows.Forms.RichTextBox();
-            this.openDirectoryInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -112,6 +113,7 @@ namespace Minecraft_Bedrock_Server_GUI
             this.operationToolStripMenuItem,
             this.openDirectoryInExplorerToolStripMenuItem,
             this.clearToolStripMenuItem,
+            this.languageToolStripMenuItem,
             this.serverUpdateToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -139,6 +141,13 @@ namespace Minecraft_Bedrock_Server_GUI
             this.serverCloseToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.serverCloseToolStripMenuItem.Text = "Server Close";
             this.serverCloseToolStripMenuItem.Click += new System.EventHandler(this.ServerCloseToolStripMenuItem_Click);
+            // 
+            // openDirectoryInExplorerToolStripMenuItem
+            // 
+            this.openDirectoryInExplorerToolStripMenuItem.Name = "openDirectoryInExplorerToolStripMenuItem";
+            this.openDirectoryInExplorerToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.openDirectoryInExplorerToolStripMenuItem.Text = "Open directory in explorer";
+            this.openDirectoryInExplorerToolStripMenuItem.Click += new System.EventHandler(this.openDirectoryInExplorerToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
@@ -276,12 +285,11 @@ namespace Minecraft_Bedrock_Server_GUI
             this.InfomationRichtextBox.Text = "";
             this.InfomationRichtextBox.WordWrap = false;
             // 
-            // openDirectoryInExplorerToolStripMenuItem
+            // languageToolStripMenuItem
             // 
-            this.openDirectoryInExplorerToolStripMenuItem.Name = "openDirectoryInExplorerToolStripMenuItem";
-            this.openDirectoryInExplorerToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.openDirectoryInExplorerToolStripMenuItem.Text = "Open directory in explorer";
-            this.openDirectoryInExplorerToolStripMenuItem.Click += new System.EventHandler(this.openDirectoryInExplorerToolStripMenuItem_Click);
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.languageToolStripMenuItem.Text = "Language";
             // 
             // Form1
             // 
@@ -335,6 +343,7 @@ namespace Minecraft_Bedrock_Server_GUI
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem serverUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openDirectoryInExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
     }
 }
 
