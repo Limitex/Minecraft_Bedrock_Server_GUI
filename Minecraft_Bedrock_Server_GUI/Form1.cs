@@ -58,9 +58,10 @@ namespace Minecraft_Bedrock_Server_GUI
         readonly public static string ServerDownloadSite_Link = "https://www.minecraft.net/en-us/download/server/bedrock";
         readonly public static string ServerDownloadSearch_Link = "https://minecraft.azureedge.net/bin-win/";
         readonly public static string WorldDirectoryName = Path.Combine(Application.StartupPath, "worlds");
+        readonly public static string LanguageFileVersion = "[Minecraft_Bedrock_Server_GUI_Language_Pack_Ver1.0]";
         readonly public static string PlayerAriaName = "Player";
         readonly public static string MemoryAriaName = "MemoryOccupancy";
-        readonly public static string[] ShowInfomation = 
+        readonly public static string[] ShowInfomation =
             { "Version", "Session ID", "Level Name", "Game mode", "Difficulty", "IPv4 supported", "IPv6 supported" };
         readonly static string[] NewFileDaletes =
         {
@@ -70,7 +71,7 @@ namespace Minecraft_Bedrock_Server_GUI
             Path.Combine(DownloadFolderPath, @"bedrock_server_how_to.html"),
             Path.Combine(DownloadFolderPath, @"release-notes.txt")
         };
-
+        public static string[,] LanguageBuffer;
         public static string[] Language =
         {
             "Warning",
@@ -116,12 +117,131 @@ namespace Minecraft_Bedrock_Server_GUI
         public Form1()
         {
             InitializeComponent();
+
+            //List<string> LanguageFilePath = new List<string>();
+
+            //foreach (string path in Directory.GetFiles(Application.StartupPath, "*.lang"))
+            //{
+            //    LanguageFilePath.Add(path);
+            //}
+            //string[] LanguageFileInfo = new string[LanguageFilePath.Count];
+            //if (LanguageFilePath.Count != 0)
+            //{
+            //    int j = LanguageFilePath.Count;
+            //    for (int i = 0; i < j; i++)
+            //    {
+            //        using (StreamReader sr = new StreamReader(LanguageFilePath[i], Encoding.GetEncoding("UTF-8")))
+            //        {
+            //            LanguageFileInfo[i] = sr.ReadToEnd().Replace("\r\n", "\n");
+            //        }
+            //        if (!LanguageFileInfo[i].Contains(LanguageFileVersion))
+            //        {
+            //            LanguageFileInfo[i] = string.Empty;
+            //            Array.Resize<string>(ref LanguageFileInfo, LanguageFileInfo.Length - 1);
+            //            i--;
+            //            j--;
+            //        }
+            //    }
+            //}
+
+            //if (LanguageFilePath.Count != 0 || LanguageFileInfo.Length != 0)
+            //{
+            //    bool flag = true;
+
+            //    for (int i = 0; i < LanguageFileInfo.Length; i++) if (LanguageFileInfo[i].Contains("English")) flag = false;
+                    
+            //    int x = LanguageFileInfo.Length;
+            //    if (flag) x++;
+
+            //    LanguageBuffer = new string[x, Language.Length];
+
+            //    for (int i = 0; i < LanguageFileInfo.Length; i++)
+            //    {
+            //        int j = LanguageFileInfo[i].IndexOf("Language : ") + 11;
+            //        languageToolStripMenuItem.DropDownItems.Add(LanguageFileInfo[i].Substring(
+            //            j, LanguageFileInfo[i].IndexOf("\n", j) - j));
+            //        string[] buffer = new string[Language.Length];
+            //        int l = LanguageFileInfo[i].IndexOf("<START_STRING>") + 14;
+            //        buffer = LanguageFileInfo[i].Substring(l, LanguageFileInfo[i].IndexOf("<END_STRING>") - l).Split('\n');
+            //        for (int k = 0; k < Language.Length; k++)
+            //        {
+            //            LanguageBuffer[i, k] = buffer[k];
+            //        }
+            //    }
+            //    if (flag)
+            //    {
+            //        for (int k = 0; k < Language.Length; k++)
+            //        {
+            //            LanguageBuffer[x - 1, k] = Language[k];
+            //        }
+            //        languageToolStripMenuItem.DropDownItems.Add("English(internal)");
+            //    }
+            //}
+            //else
+            //{
+            //    languageToolStripMenuItem.DropDownItems.Add("English(internal)");
+            //    foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
+            //    {
+            //        if (item.Text == "English(internal)")
+            //        {
+            //            item.CheckState = CheckState.Indeterminate;
+            //        }
+            //    }
+            //}
+
+
+            //--------------------------------
+
+            //bool EngLangCheckFlug = true;
+            //string[] LanguageFileInfo = new string[LanguageFilePath.Count];
+            //LanguageBuffer = new string[LanguageFilePath.Count, Language.Length];
+            //for (int i = 0; i < LanguageFilePath.Count; i++) 
+            //{
+            //    using (StreamReader sr = new StreamReader(LanguageFilePath[i], Encoding.GetEncoding("UTF-8")))
+            //    {
+            //        LanguageFileInfo[i] = sr.ReadToEnd().Replace("\r\n", "\n");
+            //    }
+            //    int j = LanguageFileInfo[i].IndexOf("Language : ") + 11;
+            //    languageToolStripMenuItem.DropDownItems.Add(LanguageFileInfo[i].Substring(
+            //        j, LanguageFileInfo[i].IndexOf("\n", j)- j));
+            //    string[] buffer = new string[Language.Length];
+            //    int l = LanguageFileInfo[i].IndexOf("<START_STRING>") + 14;
+            //    buffer = LanguageFileInfo[i].Substring(l, LanguageFileInfo[i].IndexOf("<END_STRING>") - l).Split('\n');
+            //    for (int k = 0; k < Language.Length; k++)
+            //    {
+            //        LanguageBuffer[i, k] = buffer[k];
+            //    }
+            //    if (EngLangCheckFlug && LanguageFileInfo[i].Contains("English")) EngLangCheckFlug = false;
+            //}
+
+            //MessageBox.Show(LanguageBuffer.Length.ToString());
+            //if (EngLangCheckFlug)
+            //{
+            //    MessageBox.Show("English language file not found. \nUse internal data.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    languageToolStripMenuItem.DropDownItems.Add("English(internal)");
+            //    languageToolStripMenuItem.DropDownItems["English(internal)"].Click += LanguageMenuItem_Click;
+            //}
+
+            //for (int i = 0; i < languageToolStripMenuItem.DropDownItems.Count; i++)
+            //{
+            //    languageToolStripMenuItem.DropDownItems[i].Click += LanguageMenuItem_Click;
+            //}
+
+            //foreach (string name in languageToolStripMenuItem.DropDownItems) if (name.Contains("English")) EngLangCheckFlug = false;
+
+
+            //foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
+            //{
+            //    if (item.Text == "English")
+            //    {
+            //        item.CheckState = CheckState.Indeterminate;
+            //    }
+            //}
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
+            //MessageBox.Show();
 
 
             fileToolStripMenuItem.Text = Language[23];
@@ -396,6 +516,20 @@ namespace Minecraft_Bedrock_Server_GUI
                 thread.Start();
             }
         }
+        //private void LanguageMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
+        //    {
+        //        if (object.ReferenceEquals(item, sender))
+        //        {
+        //            item.CheckState = CheckState.Indeterminate;
+        //        }
+        //        else
+        //        {
+        //            item.CheckState = CheckState.Unchecked;
+        //        }
+        //    }
+        //}
 
         private void ConsoleInputTextBox_KeyDown(object sender, KeyEventArgs e)
         {
