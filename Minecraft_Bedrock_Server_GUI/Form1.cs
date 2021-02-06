@@ -120,10 +120,6 @@ namespace Minecraft_Bedrock_Server_GUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
-
-
             fileToolStripMenuItem.Text = Language[23];
             operationToolStripMenuItem.Text = Language[24];
             serverStartToolStripMenuItem.Text = Language[25];
