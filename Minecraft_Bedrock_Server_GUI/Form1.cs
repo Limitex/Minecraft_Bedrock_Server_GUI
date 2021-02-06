@@ -73,7 +73,7 @@ namespace Minecraft_Bedrock_Server_GUI
 
         public static string[] Language =
         {
-            "Warning",
+            "Warning",//0
             "Infomation",
             "Update",
             "Error",
@@ -103,7 +103,7 @@ namespace Minecraft_Bedrock_Server_GUI
             "Open directory in explorer",
             "Clear",
             "Language",
-            "Server update",
+            "Server update",//30
             "Server Console",
             "Server Status",
             "Infomation",
