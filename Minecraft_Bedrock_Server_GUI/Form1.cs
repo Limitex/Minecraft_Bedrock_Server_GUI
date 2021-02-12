@@ -21,6 +21,7 @@ namespace Minecraft_Bedrock_Server_GUI
         Process ServerProcess;
         StreamWriter ServerStreamWriter;
         Thread ChartWriteThread;
+
         delegate void Delegate_string(string vs);
         delegate void Delegate_int(int i);
         delegate void Delegate_bool(bool d);
@@ -138,9 +139,7 @@ namespace Minecraft_Bedrock_Server_GUI
 
             if (Process.GetProcessesByName(ServerAppricationName).Length > 0)
             {
-                DialogResult dr = MessageBox.Show(Language[4], Language[0],
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                
+                DialogResult dr = MessageBox.Show(Language[4], Language[0], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                 if (dr == DialogResult.OK)
                 {
                     Process[] ps = Process.GetProcessesByName(ServerAppricationName);
@@ -391,6 +390,10 @@ namespace Minecraft_Bedrock_Server_GUI
                 }));
                 thread.Start();
             }
+        }
+        private void languageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void ConsoleInputTextBox_KeyDown(object sender, KeyEventArgs e)

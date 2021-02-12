@@ -42,6 +42,7 @@ namespace Minecraft_Bedrock_Server_GUI
             this.serverCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ServerStatusGroupBox = new System.Windows.Forms.GroupBox();
             this.MainChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -53,7 +54,6 @@ namespace Minecraft_Bedrock_Server_GUI
             this.GlovalIPTextBox = new System.Windows.Forms.TextBox();
             this.PlayerListRichtextBox = new System.Windows.Forms.RichTextBox();
             this.InfomationRichtextBox = new System.Windows.Forms.RichTextBox();
-            this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConsoleGroupBox.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.ServerStatusGroupBox.SuspendLayout();
@@ -131,14 +131,14 @@ namespace Minecraft_Bedrock_Server_GUI
             // serverStartToolStripMenuItem
             // 
             this.serverStartToolStripMenuItem.Name = "serverStartToolStripMenuItem";
-            this.serverStartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.serverStartToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.serverStartToolStripMenuItem.Text = "Server Start";
             this.serverStartToolStripMenuItem.Click += new System.EventHandler(this.ServerStartToolStripMenuItem_Click);
             // 
             // serverCloseToolStripMenuItem
             // 
             this.serverCloseToolStripMenuItem.Name = "serverCloseToolStripMenuItem";
-            this.serverCloseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.serverCloseToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.serverCloseToolStripMenuItem.Text = "Server Close";
             this.serverCloseToolStripMenuItem.Click += new System.EventHandler(this.ServerCloseToolStripMenuItem_Click);
             // 
@@ -155,6 +155,13 @@ namespace Minecraft_Bedrock_Server_GUI
             this.clearToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+            // 
+            // languageToolStripMenuItem
+            // 
+            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            this.languageToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.languageToolStripMenuItem.Text = "Language";
+            this.languageToolStripMenuItem.Click += new System.EventHandler(this.languageToolStripMenuItem_Click);
             // 
             // serverUpdateToolStripMenuItem
             // 
@@ -284,12 +291,6 @@ namespace Minecraft_Bedrock_Server_GUI
             this.InfomationRichtextBox.TabIndex = 0;
             this.InfomationRichtextBox.Text = "";
             this.InfomationRichtextBox.WordWrap = false;
-            // 
-            // languageToolStripMenuItem
-            // 
-            this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            this.languageToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.languageToolStripMenuItem.Text = "Language";
             // 
             // Form1
             // 
