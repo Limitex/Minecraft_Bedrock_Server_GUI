@@ -208,33 +208,7 @@ namespace Minecraft_Bedrock_Server_GUI
 
             if (!File.Exists(ServerAppricationPath))
             {
-                DialogResult dr = MessageBox.Show(Language[5],
-                    Language[1], MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (dr == DialogResult.Yes)
-                {
-                    DialogResult drSec = MessageBox.Show(Language[6],
-                        Language[0], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                    if (drSec == DialogResult.OK)
-                    {
-                        UI_Enabled();
-                        InstallingFlag = true;
-                        Thread thread = new Thread(new ThreadStart(() =>
-                        {
-                            ServerInstaller();
-                            Invoke(new Delegate_int(UI_Enabled), 0);
-                            InstallingFlag = false;
-                        }));
-                        thread.Start();
-                    }
-                    if (drSec == DialogResult.Cancel)
-                    {
-                        this.Close();
-                    }
-                }
-                if (dr == DialogResult.No) 
-                {
-                    this.Close();
-                }
+                ServerReinstall();
             } 
         }
         private void Form_Closing_evemt(object sender, FormClosingEventArgs e)
@@ -257,6 +231,12 @@ namespace Minecraft_Bedrock_Server_GUI
         }
         private void ServerStartToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(ServerAppricationPath))
+            {
+                ServerReinstall();
+                return;
+            }
+
             infomationWriteFlag = true;
             chartThreadFlag = true;
             RunningFlag = true;
@@ -393,7 +373,7 @@ namespace Minecraft_Bedrock_Server_GUI
         }
         private void languageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Unimplemented", "Not yet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ConsoleInputTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -507,6 +487,36 @@ namespace Minecraft_Bedrock_Server_GUI
             languageToolStripMenuItem.Enabled = i >= 0 && i == 0;
         }
 
+        public void ServerReinstall()
+        {
+            DialogResult dr = MessageBox.Show(Language[5],
+                Language[1], MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dr == DialogResult.Yes)
+            {
+                DialogResult drSec = MessageBox.Show(Language[6],
+                    Language[0], MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                if (drSec == DialogResult.OK)
+                {
+                    UI_Enabled();
+                    InstallingFlag = true;
+                    Thread thread = new Thread(new ThreadStart(() =>
+                    {
+                        ServerInstaller();
+                        Invoke(new Delegate_int(UI_Enabled), 0);
+                        InstallingFlag = false;
+                    }));
+                    thread.Start();
+                }
+                if (drSec == DialogResult.Cancel)
+                {
+                    this.Close();
+                }
+            }
+            if (dr == DialogResult.No)
+            {
+                this.Close();
+            }
+        }
         public void ServerInstaller(string str = "")
         {
             Invoke(new Delegate_string(Invoke_WriteConsole), Language[19] + "\n");
