@@ -1,4 +1,4 @@
-# Minecraft_Bedrock_Server_GUI
+# Minecraft_Bedrock_Server_GUI [<span style="color: red; ">Error found</span>]
 
 Software that supports the Minecraft bedrock server console software. 
 
