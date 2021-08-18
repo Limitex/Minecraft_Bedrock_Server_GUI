@@ -1,3 +1,5 @@
+# <span style="color: red;">This software was found error</span>
+
 # Minecraft_Bedrock_Server_GUI [<span style="color: red; ">Error found</span>]
 
 Software that supports the Minecraft bedrock server console software. 
