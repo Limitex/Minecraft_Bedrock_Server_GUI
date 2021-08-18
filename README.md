@@ -1,4 +1,6 @@
 # <span style="color: red;">This software was found error</span>
+This error is coming from the WebClient Class.
+Can't download using WebClient from the site that downloads the Minecraft server. 
 
 # Minecraft_Bedrock_Server_GUI [<span style="color: red; ">Error found</span>]
 
