@@ -1,8 +1,4 @@
-# <span style="color: red;">This software was found error</span>
-This error is coming from the WebClient Class.
-Can't download using WebClient from the site that downloads the Minecraft server. 
-
-# Minecraft_Bedrock_Server_GUI [<span style="color: red; ">Error found</span>]
+# Minecraft_Bedrock_Server_GUI
 
 Software that supports the Minecraft bedrock server console software. 
 
@@ -23,11 +19,13 @@ Click Update on the Tools menu to perform the server update.
 > Do not put anything in the directory created by this software. World data and configuration files may be damaged.
 > 
   
-# Funktion
+# Change log
 
-  2021/1/21 : I implemented update function and automatic download.
+  2021/10/23 : Fixed a non-download error.
   
-  2021/1/17 : I added automatic server update function.
+  2021/01/21 : I implemented update function and automatic download.
+  
+  2021/01/17 : I added automatic server update function.
 
 # Screenshot
 
