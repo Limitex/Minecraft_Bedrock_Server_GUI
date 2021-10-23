@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.Chrome;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -524,7 +525,7 @@ namespace Minecraft_Bedrock_Server_GUI
             WebClient wc = new WebClient();
             try
             {
-                string SiteDownloadString = wc.DownloadString(ServerDownloadSite_Link);
+                string SiteDownloadString = GetHtmlFromChrome(ServerDownloadSite_Link);
                 int FirstHit = SiteDownloadString.IndexOf(ServerDownloadSearch_Link);
                 int SecondHit = SiteDownloadString.IndexOf("\"", FirstHit);
                 string ServerDownlaodLink = SiteDownloadString.Substring(FirstHit, SecondHit - FirstHit);
@@ -594,7 +595,18 @@ namespace Minecraft_Bedrock_Server_GUI
                 }
             }
         }
-
+        static string GetHtmlFromChrome(string url)
+        {
+            var service = ChromeDriverService.CreateDefaultService();
+            service.HideCommandPromptWindow = true;
+            var options = new ChromeOptions();
+            options.AddArgument("--window-position=-32000,-32000");
+            var driver = new ChromeDriver(service, options);
+            driver.Url = url;
+            var source = driver.PageSource;
+            driver.Quit();
+            return source;
+        }
         //public static void ReadonlyAttribute(DirectoryInfo dirInfo, FileAttributes OldFA, FileAttributes NewFA)
         //{
         //    if ((dirInfo.Attributes & OldFA) == OldFA)
