@@ -21,7 +21,7 @@ Click Update on the Tools menu to perform the server update.
   
 # Change log
 
-  2021/10/23 : Fixed a non-download error.
+  2021/10/23 : Fixed an error that the download did not start.
   
   2021/01/21 : I implemented update function and automatic download.
   
